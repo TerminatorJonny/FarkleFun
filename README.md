@@ -6,7 +6,7 @@ Self-contained based off the Next.js starter kit.
 ## Code style
 HTML 5, CSS, JavaScript, React.js, Next.js
 ## Screenshots
-![](./images/farklefun.png)
+![](./public/images/farklefun.png)
 ## Tech/framework used
 (IDE) Used for this project was 'Visual Studio Code'.
 ## How to use?
