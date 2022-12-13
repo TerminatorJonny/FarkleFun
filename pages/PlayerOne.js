@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const PlayerOne = () => {
     return (
         <div className="box-playerone" style={{ border: "2px solid black" }}>
