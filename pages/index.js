@@ -8,7 +8,7 @@ import Footer from "./Footer";
 const App = () => {
     return (
     <div className="flexbox-container">
-        <div className="flexbox-item flexbox-item-1">
+            <div className="flexbox-item flexbox-item-1" style={{ position: "relative", minHeight: "100vh" }}>
             <Header/>
             <Instruct/>
             <Midsec/>
