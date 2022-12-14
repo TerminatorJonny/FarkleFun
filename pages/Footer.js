@@ -2,9 +2,11 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <div className="box-footer">
-            <div className="footer">
-                <p>This is going to be the footer section.</p>
+        <div className="footer-wrapper" style={{ paddingBottom: "2.5rem" }} >
+            <div className="box-footer" style={{ position: "absolute", bottom: "0", width: "100%", height: "2.5rem" }}>
+                <div className="footer" style={{ margin: "15px", textAlign: "center" }}>
+                    <p >J.Wilson & G.Gonzales - All rights reserved © 2022.</p>
+                </div>
             </div>
         </div>
     )
