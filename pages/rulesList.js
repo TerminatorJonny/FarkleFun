@@ -62,7 +62,7 @@ const RulesList = () => {
       <div className="row mb-2 Text-center">
         <h5 className="themeFontColor">set of instructions</h5>
       </div>
-      <table className="table" style={{ marginLeft: "18rem" }}>
+      <table className="table" style={{ textAlign: "center", display: "flex", justifyContent: "space-around" }}>
         <tbody className="themeFontColor">
           {rules.map((r) => (
             <RuleRow key={r.id} rules={r} />
