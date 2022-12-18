@@ -2,6 +2,8 @@ import React from "react";
 
 const DiceBox = () => {
 
+
+
     return (
         <div className="box-dice">
             <div className="diceshoe">
