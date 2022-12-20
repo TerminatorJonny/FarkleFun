@@ -1,26 +1,18 @@
 import React from "react";
+import Player from "./Player";
 
-const PlayersBox = () => {
-
+function PlayersBox(props) {
+    var array = new Array(props.playercount);
+    console.log(array)
+//TODO - manipulate width to acount for number of players
     return (
         <div className="players-wrapper" style={{ display: "flex", border: "2px solid black" }}>
-            <div className="box-playerone" style={{ border: "2px solid black", width: "49%" }}>
-                <div className="playerone" style={{ margin: "20px" }}>
-                    <h1>- Player One -</h1>
-                    <h3>Roll Count: 0</h3>
-                    <h3>Turn - Current Score: 0</h3>
-                    <h3>Game - Total Score: 0</h3>
-                </div>
-            </div>
-            <div className="box-playertwo" style={{ border: "2px solid black", width: "49%" }}>
-                <div className="playertwo" style={{ margin: "20px" }}>
-                    <h1>- Player Two -</h1>
-
-                    <h3>Roll Count: 0</h3>
-                    <h3>Turn - Current Score: 0</h3>
-                    <h3>Game - Total Score: 0</h3>
-                </div>
-            </div>
+            {[...array].map((e, i) => {
+                console.log("hello")
+                return (<div key={i} style={{ border: "2px solid black", width: "49%" }}>
+                    <Player />
+                </div>);
+            })}
         </div>
     )
 }
