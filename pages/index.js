@@ -14,11 +14,11 @@ const App = () => {
             <Header/>
             <Instruct/>
                 <DiceBox />
-                <PlayersBox />
+                <PlayersBox playercount={2} />
                 <ButtonBox />
             <Footer/>
         </div>
-    </div>
+        </div>
 )
 };
 
