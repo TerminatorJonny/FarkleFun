@@ -8,7 +8,6 @@ function PlayersBox(props) {
     return (
         <div className="players-wrapper" style={{ display: "flex", border: "2px solid black" }}>
             {[...array].map((e, i) => {
-                //console.log("hello")
                 return (<div key={i} style={{ border: "2px solid black", width: "49%" }}>
                     <Player />
                 </div>);
