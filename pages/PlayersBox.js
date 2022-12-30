@@ -3,7 +3,7 @@ import Player from "./Player";
 
 function PlayersBox(props) {
     var array = new Array(props.playercount);
-    console.log(array)
+    //console.log(array)
 //TODO - manipulate width to acount for number of players
     return (
         <div className="players-wrapper" style={{ display: "flex", border: "2px solid black" }}>

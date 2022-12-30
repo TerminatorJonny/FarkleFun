@@ -1,0 +1,28 @@
+{
+  "dice": [
+    {
+      "id": 1,
+      "value": "first dice is selected"
+    },
+    {
+      "id": 2,
+      "value": "second dice is selected"
+    },
+    {
+      "id": 3,
+      "value": "third dice is selected"
+    },
+    {
+      "id": 4,
+      "value": "fourth dice is selected"
+    },
+    {
+      "id": 5,
+      "value": "fith dice is selected"
+    },
+    {
+      "id": 1,
+      "value": "first dice is selected"
+    }
+  ]
+}
