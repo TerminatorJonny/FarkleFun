@@ -29,9 +29,10 @@ const App = () => {
       }
     }
   }
-  // function onDiceSelected() {
-  //   return 1;
-  // } TODO: onDiceSelected function set isLocked boolean value to true for the specific dice that has been clicked. 
+  function onDiceSelected() {
+    return 1;
+  }
+  // onDiceSelected function set isLocked boolean value to true for the specific dice that has been clicked. 
   // (Which then displays dotted lines to indicate that the dice has been "Selected/locked")
   return (
     <div className="flexbox-container">
@@ -47,6 +48,7 @@ const App = () => {
               <Dice
                 key={dice.id}
                 value={dice.value}
+                onDiceSelected={onDiceSelected}
               />
             ))}
           </div>
