@@ -1,17 +1,12 @@
 import react from "react";
 
-function RollDiceButton() {
-  function rollDice(diceToRoll) {
-    var diceResults = new Array(diceToRoll);
-    return [...diceResults].map(() => Math.floor(Math.random() * 6) + 1);
-  }
-
+function RollDiceButton({ rollDice }) {
   return (
     <div className="rolldice-button" style={{ textAlign: "center" }}>
       <button
         className="rolldice"
         style={{ width: "150px", height: "75px", margin: "auto" }}
-        onClick={() => console.log(rollDice(6))}
+        onClick={() => rollDice()}
       >
         Roll Dice?
       </button>

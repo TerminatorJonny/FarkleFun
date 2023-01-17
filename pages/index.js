@@ -1,20 +1,38 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Instruct from "./Instruct";
-import DiceBox from "./DiceBox";
 import PlayersBox from "./PlayersBox";
 import ButtonBox from "./ButtonBox";
 import Footer from "./Footer";
-import DiceOne from "./dice";
+import Dice from "./dice";
+
+var numberOfDice = 6;
 
 const App = () => {
-  const [selectedDice, setSelectedDice] = useState(true); //selectedDice is initially true and then false when a dice is selected
-  const [toggle, setToggle] = useState(true); //Updates CSS based on which dice is selected. to show which dice is kept.
-  const [dice, setDice] = useState([]);
-  const diceClick = () => {
-    setSelectedDice(!selectedDice);
-    setToggle(!toggle);
-  };
+  const [gameDice, setGameDice] = useState(
+    Array.apply(null, Array(numberOfDice)).map((_, i) => {
+      return {
+        id: i,
+        value: 1,
+        isLocked: false,
+      };
+    })
+  );
+  const [rollCount, setRollCount] = useState(0);
+  console.log(gameDice);
+
+  function rollDice() {
+    setRollCount(rollCount + 1);
+    for (var i = 0; i < gameDice.length; i++) {
+      if (!gameDice[i].isLocked) {
+        gameDice[i].value = Math.floor(Math.random() * 6) + 1;
+      }
+    }
+  }
+  // function onDiceSelected() {
+  //   return 1;
+  // } TODO: onDiceSelected function set isLocked boolean value to true for the specific dice that has been clicked. 
+  // (Which then displays dotted lines to indicate that the dice has been "Selected/locked")
   return (
     <div className="flexbox-container">
       <div
@@ -25,16 +43,16 @@ const App = () => {
         <Instruct />
         <div className="box-dice">
           <div className="diceshoe">
-            <DiceOne selectDice={diceClick} toggle={toggle} />
-            <DiceOne selectDice={diceClick} toggle={toggle} />
-            <DiceOne selectDice={diceClick} toggle={toggle} />
-            <DiceOne selectDice={diceClick} toggle={toggle} />
-            <DiceOne selectDice={diceClick} toggle={toggle} />
-            <DiceOne selectDice={diceClick} toggle={toggle} />
+            {gameDice.map((dice) => (
+              <Dice
+                key={dice.id}
+                value={dice.value}
+              />
+            ))}
           </div>
         </div>
         <PlayersBox playercount={2} />
-        <ButtonBox />
+        <ButtonBox rollDice={rollDice} />
         <Footer />
       </div>
     </div>
