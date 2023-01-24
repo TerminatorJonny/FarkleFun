@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-const Dice = ({ onDiceSelected, value }) => {
-  const [selectedDice, setSelectedDice] = useState(true); //selectedDice is initially true and then false when a dice is selected
+const Dice = ({id, onDiceSelected, value }) => {
+  const [isSelectedDice, setSelectedDice] = useState(false); //selectedDice is initially true and then false when a dice is selected
 
   const diceClick = () => {
-    setSelectedDice(!selectedDice);
-    onDiceSelected(selectedDice);
+    setSelectedDice(!isSelectedDice);
+    onDiceSelected(id, !isSelectedDice);
   };
 
   return (
     <img
-      style={{ border: selectedDice ? "solid" : "dashed" }}
+      style={{ border: isSelectedDice ? "dashed" : "solid" }}
       src={`./images/df${value}.png`}
       alt="dice-placeholder"
       className="dice1"
