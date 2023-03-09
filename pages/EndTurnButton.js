@@ -1,4 +1,6 @@
-import react from "react";
+import react, { useState } from "react";
+
+//const [EndTurn, setEndTurn] = useState();
 
 function EndTurnButton() {
 

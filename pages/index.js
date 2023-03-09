@@ -14,7 +14,7 @@ const App = () => {
       return {
         id: i,
         value: 1,
-        isLocked: false,
+        isSelected: false,
       };
     })
   );
@@ -24,13 +24,19 @@ const App = () => {
   function rollDice() {
     setRollCount(rollCount + 1);
     for (var i = 0; i < gameDice.length; i++) {
-      if (!gameDice[i].isLocked) {
+      if (!gameDice[i].isSelected && !gameDice[i].isLocked) {
         gameDice[i].value = Math.floor(Math.random() * 6) + 1;
+      } else {
+        gameDice[i].isLocked = true;
+        gameDice[i].isSelected = false;
+        // This is where you can keep track of which dice got selected for scoring.
+        // Calculate what the score is based on the dice that is selected.
       }
     }
+    console.log(gameDice);
   }
-  function onDiceSelected(i, isLocked) {
-    gameDice[i].isLocked = isLocked;
+  function onDiceSelected(i, isSelected) {
+    gameDice[i].isSelected = isSelected;
     console.log(gameDice[i]);
   }
   return (
@@ -49,6 +55,7 @@ const App = () => {
                 key={dice.id}
                 value={dice.value}
                 onDiceSelected={onDiceSelected}
+                isLocked={dice.isLocked}
               />
             ))}
           </div>
