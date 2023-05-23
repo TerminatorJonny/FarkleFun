@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Instruct from "./Instruct";
 import PlayersBox from "./PlayersBox";
@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import Dice from "./dice";
 
 var numberOfDice = 6;
+var numberOfPlayers = 2;
 
 const App = () => {
   const [gameDice, setGameDice] = useState(
@@ -19,25 +20,55 @@ const App = () => {
     })
   );
   const [rollCount, setRollCount] = useState(0);
-  console.log(gameDice);
+  const [diceLockTracker, setDiceLockTracker] = useState({});
+  const [currentPlayer, setCurrentPlayer] = useState();
+
+  useEffect(() => {
+    // Here is where you will send the diceLockTracker to the scoring component.
+    // Where the scoring component will then calculate the total score.
+  }, [setDiceLockTracker]);
 
   function rollDice() {
-    setRollCount(rollCount + 1);
+    var selectedDice = [];
+    var currentRollCount = rollCount + 1;
+    setRollCount(currentRollCount);
     for (var i = 0; i < gameDice.length; i++) {
       if (!gameDice[i].isSelected && !gameDice[i].isLocked) {
         gameDice[i].value = Math.floor(Math.random() * 6) + 1;
-      } else {
+      } else if (gameDice[i].isSelected) {
         gameDice[i].isLocked = true;
         gameDice[i].isSelected = false;
-        // This is where you can keep track of which dice got selected for scoring.
-        // Calculate what the score is based on the dice that is selected.
+        selectedDice.push(gameDice[i].value);
       }
     }
-    console.log(gameDice);
+    setDiceLockTracker({
+      ...diceLockTracker,
+      [currentRollCount]: selectedDice,
+    });
+    console.log(diceLockTracker);
   }
+  function onTurnEnded() {
+    // We need to set the total score, lock in the currently selected dice, 
+    // unlock and re-roll all of the dice, change the current player, reset the roll count
+    var selectedDice = [];
+
+    for (var i = 0; i < gameDice.length; i++) {
+      if (gameDice[i].isSelected) {
+        
+        selectedDice.push(gameDice[i].value);
+      }
+    }
+    setDiceLockTracker({});
+    randomizeDice();
+    currentPlayer.setGameScore({
+      ...diceLockTracker,
+      [rollCount]: selectedDice,
+    })
+    setRollCount(1)
+  }
+
   function onDiceSelected(i, isSelected) {
     gameDice[i].isSelected = isSelected;
-    console.log(gameDice[i]);
   }
   return (
     <div className="flexbox-container">
@@ -60,7 +91,7 @@ const App = () => {
             ))}
           </div>
         </div>
-        <PlayersBox playercount={2} />
+        <PlayersBox playercount={numberOfPlayers} />
         <ButtonBox rollDice={rollDice} />
         <Footer />
       </div>
