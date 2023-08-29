@@ -1,10 +1,6 @@
 import react from "react";
 
-function EndGameButton() {
-
-    function something4() {
-
-    }
+function EndGameButton({ }) {
 
     return (
         <div className="endgame-button" style={{ textAlign: "center" }}>

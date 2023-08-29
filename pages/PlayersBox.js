@@ -1,6 +1,7 @@
 import React from "react";
 import Player from "./Player";
 
+
 function PlayersBox(props) {
     var array = new Array(props.playercount);
     //console.log(array)
@@ -9,7 +10,7 @@ function PlayersBox(props) {
         <div className="players-wrapper" style={{ display: "flex", border: "2px solid black" }}>
             {[...array].map((e, i) => {
                 return (<div key={i} style={{ border: "2px solid black", width: "49%" }}>
-                    <Player />
+                    <Player score={props.score}/>
                 </div>);
             })}
         </div>

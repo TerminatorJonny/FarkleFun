@@ -5,7 +5,7 @@ import PlayGameButton from "./PlayGameButton";
 import RollDiceButton from "./RollDiceButton";
 import ScoreDiceButton from "./ScoreDiceButton";
 
-const ButtonBox = ({ rollDice }) => {
+const ButtonBox = ({ rollDice, onTurnEnded }) => {
   return (
     <div className="buttonbox-wrapper" style={{ border: "2px solid black" }}>
       <div
@@ -20,7 +20,7 @@ const ButtonBox = ({ rollDice }) => {
         <PlayGameButton />
         <RollDiceButton rollDice={rollDice} />
         <ScoreDiceButton />
-        <EndTurnButton />
+        <EndTurnButton onTurnEnded={onTurnEnded} />
         <EndGameButton />
       </div>
     </div>

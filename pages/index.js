@@ -5,6 +5,11 @@ import PlayersBox from "./PlayersBox";
 import ButtonBox from "./ButtonBox";
 import Footer from "./Footer";
 import Dice from "./dice";
+import {
+  calculateStraightScore,
+  calculateThreePairsScore,
+  calculateOneTriple,
+} from "./Calculations";
 
 var numberOfDice = 6;
 var numberOfPlayers = 2;
@@ -22,49 +27,91 @@ const App = () => {
   const [rollCount, setRollCount] = useState(0);
   const [diceLockTracker, setDiceLockTracker] = useState({});
   const [currentPlayer, setCurrentPlayer] = useState();
+  const [diceScore, setDiceScore] = useState(0);
+  randomizeDice();
 
   useEffect(() => {
     // Here is where you will send the diceLockTracker to the scoring component.
     // Where the scoring component will then calculate the total score.
   }, [setDiceLockTracker]);
 
-  function rollDice() {
+  function randomizeDice() {
     var selectedDice = [];
-    var currentRollCount = rollCount + 1;
-    setRollCount(currentRollCount);
     for (var i = 0; i < gameDice.length; i++) {
       if (!gameDice[i].isSelected && !gameDice[i].isLocked) {
         gameDice[i].value = Math.floor(Math.random() * 6) + 1;
-      } else if (gameDice[i].isSelected) {
+      }
+    }
+  }
+
+  function rollDice() {
+    var selectedDice = [];
+    for (var i = 0; i < gameDice.length; i++) {
+      if (gameDice[i].isSelected) {
         gameDice[i].isLocked = true;
         gameDice[i].isSelected = false;
         selectedDice.push(gameDice[i].value);
       }
     }
+    if (selectedDice.length == 0) {
+      return;
+    }
+    randomizeDice();
+    var currentRollCount = rollCount + 1;
+    setRollCount(currentRollCount);
     setDiceLockTracker({
       ...diceLockTracker,
-      [currentRollCount]: selectedDice,
+      [currentRollCount]: selectedDice.sort(function (a, b) {
+        return a - b;
+      }),
     });
-    console.log(diceLockTracker);
   }
+
+  let score = 0;
+
   function onTurnEnded() {
-    // We need to set the total score, lock in the currently selected dice, 
-    // unlock and re-roll all of the dice, change the current player, reset the roll count
+    setDiceScore();
+    // const totalScore = gameDice[i].isLocked;
+    // return totalScore;
+    // We need to set the total score,
+    // change the current player
     var selectedDice = [];
 
     for (var i = 0; i < gameDice.length; i++) {
+      gameDice[i].isLocked = false;
       if (gameDice[i].isSelected) {
-        
         selectedDice.push(gameDice[i].value);
       }
     }
+
+    //console.log(diceLockTracker);
+    for (var i = 1; i <= rollCount; i++) {
+      // Continue is moving on to the next iteration of the loop
+      if (!diceLockTracker[i]) {
+        continue;
+      }
+      var currentRollCount = rollCount + 1;
+      setDiceLockTracker({
+        ...diceLockTracker,
+        [currentRollCount]: selectedDice.sort(function (a, b) {
+          return a - b;
+        }),
+      });
+      score += calculateStraightScore(diceLockTracker[i]);
+      score += calculateThreePairsScore(diceLockTracker[i]);
+      score += calculateOneTriple(diceLockTracker[i]);
+    }
+    window.dispatchEvent(
+      new CustomEvent("onScoreUpdated", { detail: { score: score } })
+    );
+
     setDiceLockTracker({});
     randomizeDice();
-    currentPlayer.setGameScore({
-      ...diceLockTracker,
-      [rollCount]: selectedDice,
-    })
-    setRollCount(1)
+    // currentPlayer.setGameScore({
+    //   ...diceLockTracker,
+    //   [rollCount]: selectedDice,
+    // });
+    setRollCount(1);
   }
 
   function onDiceSelected(i, isSelected) {
@@ -91,8 +138,12 @@ const App = () => {
             ))}
           </div>
         </div>
-        <PlayersBox playercount={numberOfPlayers} />
-        <ButtonBox rollDice={rollDice} />
+        <PlayersBox
+          playercount={numberOfPlayers}
+          onTurnEnded={onTurnEnded}
+          score={score}
+        />
+        <ButtonBox rollDice={rollDice} onTurnEnded={onTurnEnded} />
         <Footer />
       </div>
     </div>
